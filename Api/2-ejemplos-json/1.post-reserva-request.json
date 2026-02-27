@@ -1,0 +1,10 @@
+{
+  "id_usuario": 3,
+  "id_recurso": 1,
+  "fecha": "2025-11-28",
+  "hora_inicio": "09:00",
+  "hora_fin": "11:00",
+  "numero_plazas": 10,
+  "motivo": "Reunión de equipo",
+  "observaciones": "Sin incidencias"
+}

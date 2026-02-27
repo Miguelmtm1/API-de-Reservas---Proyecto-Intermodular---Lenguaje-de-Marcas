@@ -1,0 +1,276 @@
+openapi: 3.0.3
+info:
+  title: API de Reservas - Proyecto Intermodular - Lenguaje de Marcas
+  version: 1.0.0
+  description: >
+    API REST para la gestión de reservas de recursos.
+    Permite crear, consultar, modificar y eliminar reservas.
+    Autor: Miguel Ángel Tortosa Mira
+
+servers:
+  - url: http://localhost:8080/api
+    description: Servidor local de desarrollo
+
+paths:
+
+  /reservas:
+    get:
+      summary: Listar todas las reservas
+      description: Devuelve un listado completo de reservas registradas.
+      responses:
+        '200':
+          description: Lista de reservas obtenida correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Reserva'
+
+    post:
+      summary: Crear una nueva reserva
+      description: Crea una nueva reserva para un recurso existente.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReservaCreate'
+      responses:
+        '201':
+          description: Reserva creada correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reserva'
+        '400':
+          description: Error de validación en los datos enviados
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /reservas/{id_recurso}/{id_reserva_local}:
+    parameters:
+      - name: id_recurso
+        in: path
+        required: true
+        description: Identificador del recurso reservado
+        schema:
+          type: integer
+          example: 1
+      - name: id_reserva_local
+        in: path
+        required: true
+        description: Identificador local de la reserva dentro del recurso
+        schema:
+          type: integer
+          example: 1
+
+    get:
+      summary: Obtener una reserva concreta
+      description: Devuelve los detalles de una reserva específica.
+      responses:
+        '200':
+          description: Reserva encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reserva'
+        '404':
+          description: Reserva no encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    put:
+      summary: Actualizar una reserva existente
+      description: Modifica los datos de una reserva concreta.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReservaUpdate'
+      responses:
+        '200':
+          description: Reserva actualizada correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reserva'
+        '400':
+          description: Error en los datos enviados
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Reserva no encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      summary: Eliminar una reserva
+      description: Elimina una reserva específica.
+      responses:
+        '204':
+          description: Reserva eliminada correctamente
+        '404':
+          description: Reserva no encontrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+
+    Reserva:
+      type: object
+      description: Representa una reserva registrada en el sistema.
+      properties:
+        id_recurso:
+          type: integer
+          description: Identificador del recurso reservado
+          example: 1
+        id_reserva_local:
+          type: integer
+          description: Identificador único de la reserva dentro del recurso
+          example: 1
+        id_usuario:
+          type: integer
+          description: Identificador del usuario que realiza la reserva
+          example: 3
+        fecha:
+          type: string
+          format: date
+          description: Fecha en la que se realiza la reserva
+          example: 2025-11-28
+        hora_inicio:
+          type: string
+          format: time
+          description: Hora de inicio de la reserva
+          example: "09:00"
+        hora_fin:
+          type: string
+          format: time
+          description: Hora de finalización de la reserva
+          example: "11:00"
+        numero_plazas:
+          type: integer
+          description: Número de plazas solicitadas
+          minimum: 1
+          example: 10
+        motivo:
+          type: string
+          description: Motivo de la reserva
+          maxLength: 255
+          example: Reunión de equipo
+        observaciones:
+          type: string
+          description: Observaciones adicionales
+          example: Sin incidencias
+        coste:
+          type: number
+          format: float
+          description: Coste total de la reserva
+          minimum: 0
+          example: 50.00
+      required:
+        - id_recurso
+        - id_reserva_local
+        - id_usuario
+        - fecha
+        - hora_inicio
+        - hora_fin
+        - numero_plazas
+        - motivo
+
+    ReservaCreate:
+      type: object
+      description: Datos necesarios para crear una reserva.
+      properties:
+        id_usuario:
+          type: integer
+          description: Usuario que realiza la reserva
+          example: 3
+        id_recurso:
+          type: integer
+          description: Recurso que se desea reservar
+          example: 1
+        fecha:
+          type: string
+          format: date
+          example: 2025-11-28
+        hora_inicio:
+          type: string
+          format: time
+          example: "09:00"
+        hora_fin:
+          type: string
+          format: time
+          example: "11:00"
+        numero_plazas:
+          type: integer
+          minimum: 1
+          example: 10
+        motivo:
+          type: string
+          example: Reunión de equipo
+        observaciones:
+          type: string
+          example: Sin incidencias
+      required:
+        - id_usuario
+        - id_recurso
+        - fecha
+        - hora_inicio
+        - hora_fin
+        - numero_plazas
+        - motivo
+
+    ReservaUpdate:
+      type: object
+      description: Datos modificables de una reserva.
+      properties:
+        fecha:
+          type: string
+          format: date
+          example: 2025-11-30
+        hora_inicio:
+          type: string
+          format: time
+          example: "10:00"
+        hora_fin:
+          type: string
+          format: time
+          example: "12:00"
+        numero_plazas:
+          type: integer
+          minimum: 1
+          example: 15
+        motivo:
+          type: string
+          example: Cambio de horario
+        observaciones:
+          type: string
+          example: Se amplía el número de asistentes
+
+    Error:
+      type: object
+      description: Modelo de error estándar.
+      properties:
+        error:
+          type: string
+          example: Solicitud inválida
+        detalles:
+          type: array
+          items:
+            type: string
+          example:
+            - La fecha no puede ser anterior al día actual
+            - La hora_fin debe ser mayor que hora_inicio

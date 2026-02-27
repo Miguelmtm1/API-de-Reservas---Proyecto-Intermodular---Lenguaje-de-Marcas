@@ -1,0 +1,7 @@
+{
+  "error": "Solicitud inválida",
+  "detalles": [
+    "La fecha no puede ser anterior al día actual",
+    "La hora_fin debe ser mayor que hora_inicio"
+  ]
+}
