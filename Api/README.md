@@ -9,8 +9,7 @@ Este repositorio contiene la documentación de la API REST para un sistema de re
 ## Estructura del proyecto
 
 ```
-docs/
- └── api/
+api/
       ├── 1-analisis-dominio.md
       ├── README.md
       ├── 2-ejemplos-json/
@@ -32,7 +31,7 @@ docs/
 ---
 
 ##  1. Análisis de Dominio
-Archivo: `docs/api/1-analisis-dominio.md`
+Archivo: `/api/1-analisis-dominio.md`
 
 Incluye:
 - Tablas relevantes para la API
@@ -49,7 +48,7 @@ Entidades expuestas:
 ---
 
 ## 2. Ejemplos JSON
-Carpeta: `docs/api/2-ejemplos-json/`
+Carpeta: `/api/2-ejemplos-json/`
 
 | Archivo | Descripción |
 |--------|-------------|
@@ -61,7 +60,7 @@ Carpeta: `docs/api/2-ejemplos-json/`
 ---
 
 ##  3. Definición OpenAPI
-Archivo: `docs/api/3-openapi.yaml`
+Archivo: `/api/3-openapi.yaml`
 
 Incluye:
 - Rutas de la API
