@@ -12,12 +12,21 @@ Este repositorio contiene la documentación de la API REST para un sistema de re
 docs/
  └── api/
       ├── 1-analisis-dominio.md
+      ├── README.md
       ├── 2-ejemplos-json/
       │     ├── post-reserva-request.json
       │     ├── post-reserva-response-201.json
       │     ├── get-reservas-response-200.json
       │     └── error-400.json
-      └── 3-openapi.yaml
+      ├── images/
+      │     └── swagger-ui.png
+      └── 3-openapi/
+            ├── openapi.yaml
+            └── swagger-ui-dist/
+                  ├── index.html
+                  ├── openapi.yaml
+                  └── swagger-ui-dist/
+                        ├── (32 archivos)
 ```
 
 ---
